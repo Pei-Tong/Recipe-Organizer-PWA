@@ -1,12 +1,12 @@
-const CACHE_NAME = "to-do-pwa-cache-v1";
+const CACHE_NAME = "recipe-organizer-pwa-cache-v1";
 const FILES_TO_CACHE = [
-  "/To-Do-List-PWA/",
-  "/To-Do-List-PWA/index.html",
-  "/To-Do-List-PWA/style.css",
-  "/To-Do-List-PWA/app.js",
-  "/To-Do-List-PWA/manifest.json",
-  "/To-Do-List-PWA/icons/icon-128.png",
-  "/To-Do-List-PWA/icons/icon-512.png",
+  "/Recipe-Organizer-PWA/",
+  "/Recipe-Organizer-PWA/index.html",
+  "/Recipe-Organizer-PWA/style.css",
+  "/Recipe-Organizer-PWA/app.js",
+  "/Recipe-Organizer-PWA/manifest.json",
+  "/Recipe-Organizer-PWA/icons/icon-128.png",
+  "/Recipe-Organizer-PWA/icons/icon-512.png",
 ];
 
 self.addEventListener("install", (event) => {

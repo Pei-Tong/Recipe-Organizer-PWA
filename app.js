@@ -1,5 +1,3 @@
-
-
 // 頁面元素選取
 const taskInput = document.getElementById("taskInput");
 const addTaskBtn = document.getElementById("addTaskBtn");
@@ -25,13 +23,12 @@ import { getDocs, addDoc, getFirestore, collection, deleteDoc, doc, getDoc } fro
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAIG7xk6369LrCe0OIiDoPZHZuMcUikuc4",
-  authDomain: "todo-list-a5d26.firebaseapp.com",
-  projectId: "todo-list-a5d26",
-  storageBucket: "todo-list-a5d26.firebasestorage.app",
-  messagingSenderId: "668975418178",
-  appId: "1:668975418178:web:34c993da77dd83c116d6db",
-  measurementId: "G-EM5RQTDPS8"
+  apiKey: "AIzaSyB7UqECLIMhMXofB0ZsmB-cqSrbRxk53VI",
+  authDomain: "recipe-organizer-pwa.firebaseapp.com",
+  projectId: "recipe-organizer-pwa",
+  storageBucket: "recipe-organizer-pwa.firebasestorage.app",
+  messagingSenderId: "523889521938",
+  appId: "1:523889521938:web:3ff88954b9ba279af22fcb"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -82,7 +79,7 @@ if ('serviceWorker' in navigator) {
   const s = navigator.serviceWorker;
 
   s.register(sw.href, {
-    scope: '/To-Do-List-PWA/',
+    scope: '/Recipe-Organizer-PWA/',
   })
     .then(() => 
       console.log('Service Worker Registered for scope:', sw.href, 'with', import.meta.url)

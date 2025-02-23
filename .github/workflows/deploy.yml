@@ -1,4 +1,4 @@
-name: Deploy Vanilla JavaScript PWA Checklist App
+name: Deploy Vanilla JavaScript PWA Recipe-Organizer App
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: recipe-organizer repository
         uses: actions/checkout@v3
 
       - name: Install Dependencies (if any)
