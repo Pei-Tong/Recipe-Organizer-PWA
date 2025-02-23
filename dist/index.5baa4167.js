@@ -603,15 +603,22 @@ var _loglevel = require("loglevel");
 var _loglevelDefault = parcelHelpers.interopDefault(_loglevel);
 // Initialize Firebase
 var _app = require("firebase/app");
-var _firestore = require("firebase/firestore");
+var _firestore = require("firebase/firestore"); // 添加 updateDoc 和 query 支援編輯和過濾
 // Import Google Generative AI
 var _generativeAi = require("@google/generative-ai");
-const taskInput = document.getElementById("taskInput");
-const addTaskBtn = document.getElementById("addTaskBtn");
-const taskList = document.getElementById("taskList");
+const recipeName = document.getElementById("recipeName");
+const ingredients = document.getElementById("ingredients");
+const steps = document.getElementById("steps");
+const mealType = document.getElementById("mealType");
+const addRecipeBtn = document.getElementById("addRecipeBtn");
+const recipeList = document.getElementById("recipeList");
+const filterIngredient = document.getElementById("filterIngredient");
+const filterMealType = document.getElementById("filterMealType");
+const clearFilterBtn = document.getElementById("clearFilterBtn");
 const aiButton = document.getElementById("send-btn");
 const aiInput = document.getElementById("chat-input");
 const chatHistory = document.getElementById("chat-history");
+const qrBtn = document.getElementById("qr-btn"); // QR 碼按鈕
 // Set the log level (trace, debug, info, warn, error)
 (0, _loglevelDefault.default).setLevel("info");
 // Example logs
@@ -648,7 +655,7 @@ async function getApiKey() {
 async function askChatBot(request) {
     if (!model) throw new Error("Generative AI model not initialized. Please wait for page load.");
     try {
-        const response = await model.generateContent(request);
+        const response = await model.generateContent(`Provide a recipe suggestion or answer for: ${request}. If it's a recipe query, include name, ingredients, and steps.`);
         return response.response.text();
     } catch (error) {
         (0, _loglevelDefault.default).error("Error in askChatBot:", error);
@@ -660,79 +667,216 @@ const sw = new URL(require("d5305f340704cc0e"));
 if ('serviceWorker' in navigator) {
     const s = navigator.serviceWorker;
     s.register(sw.href, {
-        scope: '/To-Do-List-PWA/'
+        scope: '/Recipe-Organizer-PWA/'
     }).then(()=>console.log('Service Worker Registered for scope:', sw.href, 'with', "file:///app.js")).catch((err)=>console.error('Service Worker Error:', err));
 }
-// Sanitize Input
+/*
+// Biometric Authentication (Simple Example using Web Authentication API)
+async function authenticateBiometric() {
+  try {
+    if ('credentials' in navigator) {
+      const credential = await navigator.credentials.get({ publicKey: { challenge: new Uint8Array(32) } });
+      log.info("Biometric authentication successful.");
+      return true;
+    } else {
+      log.warn("Biometric authentication not supported in this browser.");
+      alert("Biometric authentication is not supported in this browser.");
+      return false;
+    }
+  } catch (error) {
+    log.error("Biometric authentication failed:", error);
+    alert("Biometric authentication failed. Please try again.");
+    return false;
+  }
+}
+*/ // Sanitize Input
 function sanitizeInput(input) {
     const div = document.createElement("div");
     div.textContent = input;
     return div.innerHTML;
 }
-// Add Task on Click
-addTaskBtn.addEventListener("click", async ()=>{
-    const task = taskInput.value.trim();
-    if (task) {
-        const taskText = sanitizeInput(taskInput.value.trim());
-        if (taskText) try {
-            // Log user action
-            (0, _loglevelDefault.default).info(`Task added: ${taskText}`);
-            await addTaskToFirestore(taskText);
-            renderTasks();
-            taskInput.value = "";
+// Add Recipe on Click
+addRecipeBtn.addEventListener("click", async ()=>{
+    const name = recipeName.value.trim();
+    const ingredientsText = ingredients.value.trim();
+    const stepsText = steps.value.trim();
+    const meal = mealType.value;
+    if (name && ingredientsText && stepsText && meal) {
+        const recipeData = {
+            name: sanitizeInput(name),
+            ingredients: sanitizeInput(ingredientsText).split(',').map((item)=>item.trim()),
+            steps: sanitizeInput(stepsText).split('\n').map((step)=>step.trim()).filter((step)=>step),
+            mealType: meal,
+            favorite: false
+        };
+        try {
+            // Temporarily skip biometric authentication for development
+            await addRecipeToFirestore(recipeData);
+            renderRecipes();
+            recipeName.value = "";
+            ingredients.value = "";
+            steps.value = "";
+            mealType.selectedIndex = 0;
+            (0, _loglevelDefault.default).info(`Recipe "${name}" added successfully.`);
         } catch (error) {
-            // Log error
-            (0, _loglevelDefault.default).error("Error adding task", error);
+            (0, _loglevelDefault.default).error("Error adding recipe:", error);
         }
-    } else alert("Please enter a task");
+    } else alert("Please fill in all recipe fields.");
 });
-// Add Task on Enter
-taskInput.addEventListener("keypress", function(event) {
-    if (event.key === "Enter") addTaskBtn.click();
+// Add Recipe on Enter (for recipeName)
+recipeName.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") addRecipeBtn.click();
 });
-// Add Task to Firestore
-async function addTaskToFirestore(taskText) {
-    await (0, _firestore.addDoc)((0, _firestore.collection)(db, "todos"), {
-        text: taskText,
-        completed: false
+// Add Recipe to Firestore
+async function addRecipeToFirestore(recipeData) {
+    await (0, _firestore.addDoc)((0, _firestore.collection)(db, "recipes"), recipeData);
+}
+// Edit Recipe
+function editRecipe(recipeId, recipeData) {
+    const recipeRef = (0, _firestore.doc)(db, "recipes", recipeId);
+    (0, _firestore.updateDoc)(recipeRef, recipeData).then(()=>{
+        (0, _loglevelDefault.default).info(`Recipe with id ${recipeId} updated successfully.`);
+        renderRecipes();
+    }).catch((error)=>{
+        (0, _loglevelDefault.default).error("Error updating recipe:", error);
     });
 }
-// Remove task on Click
-taskList.addEventListener("click", async (e)=>{
-    if (e.target.tagName === 'LI') {
-        await (0, _firestore.deleteDoc)((0, _firestore.doc)(db, "todos", e.target.id), {});
-        e.target.remove();
-        renderTasks();
+// Remove Recipe
+async function removeRecipe(recipeId) {
+    const recipeRef = (0, _firestore.doc)(db, "recipes", recipeId);
+    try {
+        await (0, _firestore.deleteDoc)(recipeRef);
+        (0, _loglevelDefault.default).info(`Recipe with id ${recipeId} has been deleted from Firestore.`);
+    } catch (error) {
+        (0, _loglevelDefault.default).error("Error removing recipe: ", error);
     }
+}
+function removeVisualRecipe(recipeId) {
+    const recipeElement = document.getElementById(recipeId);
+    if (recipeElement) {
+        recipeElement.remove();
+        (0, _loglevelDefault.default).info(`Recipe with id ${recipeId} removed from the visual interface.`);
+    } else (0, _loglevelDefault.default).warn(`Recipe with id ${recipeId} not found on the page.`);
+}
+// Toggle Favorite
+function toggleFavorite(recipeId, currentFavorite) {
+    const recipeRef = (0, _firestore.doc)(db, "recipes", recipeId);
+    (0, _firestore.updateDoc)(recipeRef, {
+        favorite: !currentFavorite
+    }).then(()=>{
+        (0, _loglevelDefault.default).info(`Favorite status toggled for recipe with id ${recipeId}.`);
+        renderRecipes();
+    }).catch((error)=>{
+        (0, _loglevelDefault.default).error("Error toggling favorite:", error);
+    });
+}
+// Filter Recipes
+function filterRecipes() {
+    const ingredientFilter = filterIngredient.value.trim().toLowerCase();
+    const mealFilter = filterMealType.value.toLowerCase();
+    (0, _firestore.getDocs)((0, _firestore.collection)(db, "recipes")).then((querySnapshot)=>{
+        recipeList.innerHTML = "";
+        querySnapshot.forEach((doc)=>{
+            const recipe = doc.data();
+            const matchesIngredient = !ingredientFilter || recipe.ingredients.some((ing)=>ing.toLowerCase().includes(ingredientFilter));
+            const matchesMeal = !mealFilter || recipe.mealType.toLowerCase() === mealFilter;
+            if (matchesIngredient && matchesMeal) renderRecipe(doc.id, recipe);
+        });
+    }).catch((error)=>{
+        (0, _loglevelDefault.default).error("Error filtering recipes:", error);
+    });
+}
+// Clear Filters
+clearFilterBtn.addEventListener("click", ()=>{
+    filterIngredient.value = "";
+    filterMealType.value = "";
+    renderRecipes();
 });
-// Remove task on Enter
-taskList.addEventListener("keypress", async function(e) {
-    if (e.target.tagName === 'LI' && e.key === "Enter") {
-        await (0, _firestore.deleteDoc)((0, _firestore.doc)(db, "todos", e.target.id), {});
-        e.target.remove();
-        renderTasks();
-    }
-});
+// Render Recipes
+async function renderRecipes() {
+    const recipes = await getRecipesFromFirestore();
+    recipeList.innerHTML = "";
+    recipes.forEach((recipe)=>{
+        const recipeData = recipe.data();
+        const recipeItem = document.createElement("li");
+        recipeItem.id = recipe.id;
+        recipeItem.tabIndex = 0;
+        recipeItem.innerHTML = `
+      <span>${recipeData.name} (${recipeData.mealType})</span>
+      <span class="actions">
+        <button onclick="editRecipe('${recipe.id}', { name: prompt('New name:', '${recipeData.name}'), mealType: prompt('New meal type:', '${recipeData.mealType}') })">Edit</button>
+        <button onclick="removeRecipe('${recipe.id}')">Delete</button>
+        <button onclick="toggleFavorite('${recipe.id}', ${recipeData.favorite || false})">${recipeData.favorite ? 'Unfavorite' : 'Favorite'}</button>
+      </span>
+    `;
+        recipeList.appendChild(recipeItem);
+    });
+}
+// Get Recipes from Firestore
+async function getRecipesFromFirestore() {
+    const data = await (0, _firestore.getDocs)((0, _firestore.collection)(db, "recipes"));
+    let userData = [];
+    data.forEach((doc)=>{
+        userData.push(doc);
+    });
+    return userData;
+}
+// Add Event Listeners for Filters
+filterIngredient.addEventListener("input", filterRecipes);
+filterMealType.addEventListener("change", filterRecipes);
 // Chatbot - Rule-based chatbot
 function ruleChatBot(request) {
-    if (request.startsWith("add task")) {
-        let task = request.replace("add task", "").trim();
-        if (task) {
-            addTaskToFirestore(task);
-            appendMessage('Task ' + task + ' added!');
-            renderTasks();
-        } else appendMessage("Please specify a task to add.");
+    if (request.startsWith("add recipe")) {
+        let recipeName = request.replace("add recipe", "").trim();
+        if (recipeName) {
+            addRecipeToFirestore({
+                name: recipeName,
+                ingredients: [],
+                steps: [],
+                mealType: "Dinner",
+                favorite: false
+            });
+            appendMessage(`Recipe ${recipeName} added!`);
+            renderRecipes();
+        } else appendMessage("Please specify a recipe name to add.");
         return true;
     } else if (request.startsWith("complete")) {
-        let taskName = request.replace("complete", "").trim();
-        if (taskName) {
-            if (removeFromTaskName(taskName)) {
-                appendMessage('Task ' + taskName + ' marked as complete.');
-                renderTasks();
-            } else appendMessage("Task not found!");
+        let recipeName = request.replace("complete", "").trim();
+        if (recipeName) {
+            if (removeFromRecipeName(recipeName)) {
+                appendMessage(`Recipe ${recipeName} marked as complete.`);
+                renderRecipes();
+            } else appendMessage("Recipe not found!");
+        } else appendMessage("Please specify a recipe to complete.");
+        return true;
+    } else if (request.startsWith("find recipes with")) {
+        let ingredient = request.replace("find recipes with", "").trim();
+        if (ingredient) {
+            filterRecipesByIngredient(ingredient);
+            appendMessage(`Finding recipes with ${ingredient}...`);
+        } else appendMessage("Please specify an ingredient.");
+        return true;
+    }
+    return false;
+}
+// Filter Recipes by Ingredient
+function filterRecipesByIngredient(ingredient) {
+    filterIngredient.value = ingredient;
+    filterRecipes();
+}
+// Chatbot - Remove recipe by name
+function removeFromRecipeName(recipeName) {
+    const recipes = recipeList.getElementsByTagName("li");
+    let found = false;
+    for (let recipe of recipes){
+        const recipeText = recipe.querySelector("span:first-child").textContent.trim().split(" (")[0]; // 獲取名稱部分
+        if (recipeText.toLowerCase() === recipeName.toLowerCase()) {
+            removeRecipe(recipe.id);
+            removeVisualRecipe(recipe.id);
+            found = true;
         }
-    } else appendMessage("Please specify a task to complete.");
-    return true;
+    }
+    return found;
 }
 // Chatbot - Send button click event
 aiButton.addEventListener('click', async ()=>{
@@ -756,49 +900,17 @@ function appendMessage(message) {
     chatHistory.appendChild(history);
     aiInput.value = "";
 }
-// Chatbot - Remove task by name
-function removeFromTaskName(taskName) {
-    const tasks = taskList.getElementsByTagName("li");
-    let found = false;
-    for (let task of tasks)if (task.textContent.trim().toLowerCase() === taskName) {
-        removeTask(task.id);
-        removeVisualTask(task.id);
-        found = true;
-    }
-    return found;
-}
-async function removeTask(taskId) {
-    const taskRef = (0, _firestore.doc)(db, "todos", taskId);
-    try {
-        await (0, _firestore.deleteDoc)(taskRef);
-        (0, _loglevelDefault.default).info(`Task with id ${taskId} has been deleted from Firestore.`);
-    } catch (error) {
-        (0, _loglevelDefault.default).error("Error removing task: ", error);
-    }
-}
-// Render Tasks
-async function renderTasks() {
-    var tasks = await getTasksFromFirestore();
-    taskList.innerHTML = "";
-    tasks.forEach((task)=>{
-        if (!task.data().completed) {
-            const taskItem = document.createElement("li");
-            taskItem.id = task.id;
-            taskItem.tabIndex = 0;
-            taskItem.textContent = task.data().text;
-            taskList.appendChild(taskItem);
-        }
-    });
-}
-// Get Tasks from Firestore
-async function getTasksFromFirestore() {
-    var data = await (0, _firestore.getDocs)((0, _firestore.collection)(db, "todos"));
-    let userData = [];
-    data.forEach((doc)=>{
-        userData.push(doc);
-    });
-    return userData;
-}
+// QR Code Generation
+qrBtn.addEventListener('click', ()=>{
+    const qrCodeUrl = 'https://pei-tong.github.io/Recipe-Organizer-PWA/'; // 替換為您的 GitHub Pages 鏈接
+    const qrCodeWindow = window.open(`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrCodeUrl)}`, '_blank');
+    if (!qrCodeWindow) alert("Please allow popups to generate QR code.");
+});
+// Biometric Authentication (Add button for testing)
+document.getElementById("addRecipeBtn").addEventListener("click", async (e)=>{
+    e.preventDefault(); // 阻止表單提交
+    if (await authenticateBiometric()) addRecipeBtn.click(); // 執行原本的添加邏輯
+});
 
 },{"loglevel":"7kRFs","firebase/app":"aM3Fo","firebase/firestore":"8A4BC","@google/generative-ai":"gKJrW","d5305f340704cc0e":"72bEf","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7kRFs":[function(require,module,exports,__globalThis) {
 /*

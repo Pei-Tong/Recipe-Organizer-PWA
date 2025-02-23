@@ -29,15 +29,42 @@
     </header>
     <main>
       <div class="container">
-        <label for="taskInput"><h2>Enter a task</h2></label>
-        <input name="taskInput" type="text" id="taskInput" placeholder="Enter a new task" />
-        <button id="addTaskBtn">Add task</button>
-        <ul id="taskList"></ul>
+        <form id="recipeForm">
+          <label for="recipeName"><h2>Enter Recipe Name</h2></label>
+          <input name="recipeName" type="text" id="recipeName" placeholder="e.g., Spaghetti Bolognese" />
+          <label for="ingredients"><h2>Ingredients</h2></label>
+          <textarea name="ingredients" id="ingredients" placeholder="e.g., Pasta, Tomato, Beef"></textarea>
+          <label for="steps"><h2>Steps</h2></label>
+          <textarea name="steps" id="steps" placeholder="e.g., 1. Boil pasta...\n2. Cook sauce..."></textarea>
+          <label for="mealType"><h2>Meal Type</h2></label>
+          <select name="mealType" id="mealType">
+            <option value="Breakfast">Breakfast</option>
+            <option value="Lunch">Lunch</option>
+            <option value="Dinner">Dinner</option>
+            <option value="Snack">Snack</option>
+          </select>
+          <button type="button" id="addRecipeBtn">Add Recipe</button>
+        </form>
+        <div id="filterSection">
+          <label for="filterIngredient">Filter by Ingredient:</label>
+          <input type="text" id="filterIngredient" placeholder="e.g., Tomato" />
+          <label for="filterMealType">Filter by Meal Type:</label>
+          <select id="filterMealType">
+            <option value="">All</option>
+            <option value="Breakfast">Breakfast</option>
+            <option value="Lunch">Lunch</option>
+            <option value="Dinner">Dinner</option>
+            <option value="Snack">Snack</option>
+          </select>
+          <button id="clearFilterBtn">Clear Filters</button>
+        </div>
+        <ul id="recipeList"></ul>
       </div>
       <div id="chatbot-container">
         <div id="chat-history"></div>
-        <input type="text" id="chat-input" placeholder="Enter a new task">
+        <input type="text" id="chat-input" placeholder="Ask about recipes..." />
         <button id="send-btn">Send</button>
+        <button id="qr-btn">Generate QR Code</button>
       </div>      
     </main>
     <script type="module" src="app.js"></script>
