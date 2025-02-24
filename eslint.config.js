@@ -6,7 +6,7 @@ export default [
   {languageOptions: { globals: globals.browser }},
   pluginJs.configs.recommended,
   {
-    ignores: ["node_modules/", "dist/", "docs/"],
+    ignores: ["node_modules/", "dist/", "docs/", "tests/recipe.test.js"],
   },
   {
   rules: {
