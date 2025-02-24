@@ -24,6 +24,20 @@ h1 {
   margin-bottom: 5px;
   font-weight: bold;
   color: #4a2c2c;
+  
+}
+
+#recipeForm {
+  margin-bottom: 50px;
+}
+
+#addRecipeBtn {
+  padding: 10px 20px;
+  background-color: #4a2c2c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
 }
 
 #recipeName, #ingredients, #steps, #filterIngredient {

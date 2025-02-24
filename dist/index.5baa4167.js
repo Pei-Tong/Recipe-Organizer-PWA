@@ -597,13 +597,9 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 
 },{}],"igcvL":[function(require,module,exports,__globalThis) {
 // 頁面元素選取
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-// Import loglevel
-var _loglevel = require("loglevel");
-var _loglevelDefault = parcelHelpers.interopDefault(_loglevel);
 // Initialize Firebase
 var _app = require("firebase/app");
-var _firestore = require("firebase/firestore"); // 添加 updateDoc 和 query 支援編輯和過濾
+var _firestore = require("firebase/firestore");
 // Import Google Generative AI
 var _generativeAi = require("@google/generative-ai");
 const recipeName = document.getElementById("recipeName");
@@ -619,37 +615,51 @@ const aiButton = document.getElementById("send-btn");
 const aiInput = document.getElementById("chat-input");
 const chatHistory = document.getElementById("chat-history");
 const qrBtn = document.getElementById("qr-btn"); // QR 碼按鈕
-// Set the log level (trace, debug, info, warn, error)
-(0, _loglevelDefault.default).setLevel("info");
-// Example logs
-(0, _loglevelDefault.default).info("Application started");
-(0, _loglevelDefault.default).debug("Debugging information");
-(0, _loglevelDefault.default).error("An error occurred");
+// Import loglevel with fallback
+let log;
+try {
+    require("692aca2701c02367").then((module)=>{
+        log = module.default;
+        log.setLevel("info");
+        log.info("Application started");
+    }).catch((error)=>{
+        console.error("Failed to load loglevel:", error);
+        log = console;
+        console.info("Application started (using console as fallback)");
+    });
+} catch (error) {
+    console.error("Error initializing loglevel:", error);
+    log = console; // 最終備用方案
+}
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAIG7xk6369LrCe0OIiDoPZHZuMcUikuc4",
-    authDomain: "todo-list-a5d26.firebaseapp.com",
-    projectId: "todo-list-a5d26",
-    storageBucket: "todo-list-a5d26.firebasestorage.app",
-    messagingSenderId: "668975418178",
-    appId: "1:668975418178:web:34c993da77dd83c116d6db",
-    measurementId: "G-EM5RQTDPS8"
+    apiKey: "AIzaSyB7UqECLIMhMXofB0ZsmB-cqSrbRxk53VI",
+    authDomain: "recipe-organizer-pwa.firebaseapp.com",
+    projectId: "recipe-organizer-pwa",
+    storageBucket: "recipe-organizer-pwa.firebasestorage.app",
+    messagingSenderId: "523889521938",
+    appId: "1:523889521938:web:3ff88954b9ba279af22fcb"
 };
 const app = (0, _app.initializeApp)(firebaseConfig);
 const db = (0, _firestore.getFirestore)(app);
 let apiKey, genAI, model;
 document.addEventListener("DOMContentLoaded", async ()=>{
     await getApiKey();
-    (0, _loglevelDefault.default).info("API Key and Generative AI initialized.");
+    log.info("API Key and Generative AI initialized.");
 });
 // Call the gemini model
 async function getApiKey() {
-    let snapshot = await (0, _firestore.getDoc)((0, _firestore.doc)(db, "apikey", "googlegenai"));
-    apiKey = snapshot.data().key;
-    genAI = new (0, _generativeAi.GoogleGenerativeAI)(apiKey);
-    model = genAI.getGenerativeModel({
-        model: "gemini-1.5-flash"
-    });
+    try {
+        let snapshot = await (0, _firestore.getDoc)((0, _firestore.doc)(db, "apikey", "googlegenai"));
+        apiKey = snapshot.data().key;
+        genAI = new (0, _generativeAi.GoogleGenerativeAI)(apiKey);
+        model = genAI.getGenerativeModel({
+            model: "gemini-1.5-flash"
+        });
+    } catch (error) {
+        log.error("Error fetching API key from Firestore: ", error);
+        throw error;
+    }
 }
 // Call the function to get the API key
 async function askChatBot(request) {
@@ -658,7 +668,7 @@ async function askChatBot(request) {
         const response = await model.generateContent(`Provide a recipe suggestion or answer for: ${request}. If it's a recipe query, include name, ingredients, and steps.`);
         return response.response.text();
     } catch (error) {
-        (0, _loglevelDefault.default).error("Error in askChatBot:", error);
+        log.error("Error in askChatBot:", error);
         throw error;
     }
 }
@@ -668,34 +678,15 @@ if ('serviceWorker' in navigator) {
     const s = navigator.serviceWorker;
     s.register(sw.href, {
         scope: '/Recipe-Organizer-PWA/'
-    }).then(()=>console.log('Service Worker Registered for scope:', sw.href, 'with', "file:///app.js")).catch((err)=>console.error('Service Worker Error:', err));
+    }).then(()=>log.info('Service Worker Registered for scope:', sw.href, 'with', "file:///app.js")).catch((err)=>log.error('Service Worker Error:', err));
 }
-/*
-// Biometric Authentication (Simple Example using Web Authentication API)
-async function authenticateBiometric() {
-  try {
-    if ('credentials' in navigator) {
-      const credential = await navigator.credentials.get({ publicKey: { challenge: new Uint8Array(32) } });
-      log.info("Biometric authentication successful.");
-      return true;
-    } else {
-      log.warn("Biometric authentication not supported in this browser.");
-      alert("Biometric authentication is not supported in this browser.");
-      return false;
-    }
-  } catch (error) {
-    log.error("Biometric authentication failed:", error);
-    alert("Biometric authentication failed. Please try again.");
-    return false;
-  }
-}
-*/ // Sanitize Input
+// Sanitize Input
 function sanitizeInput(input) {
     const div = document.createElement("div");
     div.textContent = input;
     return div.innerHTML;
 }
-// Add Recipe on Click
+// Add Recipe on Click (Skipping biometric authentication)
 addRecipeBtn.addEventListener("click", async ()=>{
     const name = recipeName.value.trim();
     const ingredientsText = ingredients.value.trim();
@@ -710,16 +701,18 @@ addRecipeBtn.addEventListener("click", async ()=>{
             favorite: false
         };
         try {
-            // Temporarily skip biometric authentication for development
+            console.log("Attempting to add recipe:", recipeData);
             await addRecipeToFirestore(recipeData);
             renderRecipes();
             recipeName.value = "";
             ingredients.value = "";
             steps.value = "";
             mealType.selectedIndex = 0;
-            (0, _loglevelDefault.default).info(`Recipe "${name}" added successfully.`);
+            alert("Recipe added successfully!");
+            log.info(`Recipe "${name}" added successfully.`);
         } catch (error) {
-            (0, _loglevelDefault.default).error("Error adding recipe:", error);
+            log.error("Error adding recipe:", error);
+            alert("Failed to add recipe. Please try again.");
         }
     } else alert("Please fill in all recipe fields.");
 });
@@ -729,34 +722,47 @@ recipeName.addEventListener("keypress", function(event) {
 });
 // Add Recipe to Firestore
 async function addRecipeToFirestore(recipeData) {
-    await (0, _firestore.addDoc)((0, _firestore.collection)(db, "recipes"), recipeData);
+    console.log("Adding recipe to Firestore:", recipeData);
+    try {
+        const docRef = await (0, _firestore.addDoc)((0, _firestore.collection)(db, "recipes"), recipeData);
+        log.info(`Recipe added successfully with ID: ${docRef.id}`);
+        renderRecipes(); // 確保渲染更新
+        return docRef; // 可選：返回文檔引用以供進一步使用
+    } catch (error) {
+        log.error("Error adding recipe to Firestore: ", error);
+        throw error;
+    }
 }
 // Edit Recipe
 function editRecipe(recipeId, recipeData) {
     const recipeRef = (0, _firestore.doc)(db, "recipes", recipeId);
     (0, _firestore.updateDoc)(recipeRef, recipeData).then(()=>{
-        (0, _loglevelDefault.default).info(`Recipe with id ${recipeId} updated successfully.`);
+        log.info(`Recipe with id ${recipeId} updated successfully.`);
         renderRecipes();
     }).catch((error)=>{
-        (0, _loglevelDefault.default).error("Error updating recipe:", error);
+        log.error("Error updating recipe:", error);
+        alert("Failed to update recipe. Please try again.");
     });
 }
 // Remove Recipe
 async function removeRecipe(recipeId) {
+    console.log("Attempting to delete recipe with ID:", recipeId);
     const recipeRef = (0, _firestore.doc)(db, "recipes", recipeId);
     try {
         await (0, _firestore.deleteDoc)(recipeRef);
-        (0, _loglevelDefault.default).info(`Recipe with id ${recipeId} has been deleted from Firestore.`);
+        log.info(`Recipe with id ${recipeId} has been deleted from Firestore.`);
+        removeVisualRecipe(recipeId);
     } catch (error) {
-        (0, _loglevelDefault.default).error("Error removing recipe: ", error);
+        log.error("Error removing recipe: ", error);
+        alert("Failed to delete recipe. Please check the recipe ID or try again.");
     }
 }
 function removeVisualRecipe(recipeId) {
     const recipeElement = document.getElementById(recipeId);
     if (recipeElement) {
         recipeElement.remove();
-        (0, _loglevelDefault.default).info(`Recipe with id ${recipeId} removed from the visual interface.`);
-    } else (0, _loglevelDefault.default).warn(`Recipe with id ${recipeId} not found on the page.`);
+        log.info(`Recipe with id ${recipeId} removed from the visual interface.`);
+    } else log.warn(`Recipe with id ${recipeId} not found on the page.`);
 }
 // Toggle Favorite
 function toggleFavorite(recipeId, currentFavorite) {
@@ -764,10 +770,11 @@ function toggleFavorite(recipeId, currentFavorite) {
     (0, _firestore.updateDoc)(recipeRef, {
         favorite: !currentFavorite
     }).then(()=>{
-        (0, _loglevelDefault.default).info(`Favorite status toggled for recipe with id ${recipeId}.`);
+        log.info(`Favorite status toggled for recipe with id ${recipeId}.`);
         renderRecipes();
     }).catch((error)=>{
-        (0, _loglevelDefault.default).error("Error toggling favorite:", error);
+        log.error("Error toggling favorite:", error);
+        alert("Failed to toggle favorite status. Please try again.");
     });
 }
 // Filter Recipes
@@ -783,7 +790,8 @@ function filterRecipes() {
             if (matchesIngredient && matchesMeal) renderRecipe(doc.id, recipe);
         });
     }).catch((error)=>{
-        (0, _loglevelDefault.default).error("Error filtering recipes:", error);
+        log.error("Error filtering recipes:", error);
+        alert("Failed to filter recipes. Please try again.");
     });
 }
 // Clear Filters
@@ -797,20 +805,22 @@ async function renderRecipes() {
     const recipes = await getRecipesFromFirestore();
     recipeList.innerHTML = "";
     recipes.forEach((recipe)=>{
-        const recipeData = recipe.data();
-        const recipeItem = document.createElement("li");
-        recipeItem.id = recipe.id;
-        recipeItem.tabIndex = 0;
-        recipeItem.innerHTML = `
-      <span>${recipeData.name} (${recipeData.mealType})</span>
-      <span class="actions">
-        <button onclick="editRecipe('${recipe.id}', { name: prompt('New name:', '${recipeData.name}'), mealType: prompt('New meal type:', '${recipeData.mealType}') })">Edit</button>
-        <button onclick="removeRecipe('${recipe.id}')">Delete</button>
-        <button onclick="toggleFavorite('${recipe.id}', ${recipeData.favorite || false})">${recipeData.favorite ? 'Unfavorite' : 'Favorite'}</button>
-      </span>
-    `;
-        recipeList.appendChild(recipeItem);
+        renderRecipe(recipe.id, recipe.data());
     });
+}
+function renderRecipe(recipeId, recipeData) {
+    const recipeItem = document.createElement("li");
+    recipeItem.id = recipeId;
+    recipeItem.tabIndex = 0;
+    recipeItem.innerHTML = `
+    <span>${recipeData.name} (${recipeData.mealType})</span>
+    <span class="actions">
+      <button onclick="editRecipe('${recipeId}', { name: prompt('New name:', '${recipeData.name}'), mealType: prompt('New meal type:', '${recipeData.mealType}') })">Edit</button>
+      <button onclick="removeRecipe('${recipeId}')">Delete</button>
+      <button onclick="toggleFavorite('${recipeId}', ${recipeData.favorite || false})">${recipeData.favorite ? 'Unfavorite' : 'Favorite'}</button>
+    </span>
+  `;
+    recipeList.appendChild(recipeItem);
 }
 // Get Recipes from Firestore
 async function getRecipesFromFirestore() {
@@ -824,18 +834,24 @@ async function getRecipesFromFirestore() {
 // Add Event Listeners for Filters
 filterIngredient.addEventListener("input", filterRecipes);
 filterMealType.addEventListener("change", filterRecipes);
+// 將函數暴露到全局作用域（用於 onclick 事件）
+window.editRecipe = editRecipe;
+window.removeRecipe = removeRecipe;
+window.toggleFavorite = toggleFavorite;
 // Chatbot - Rule-based chatbot
 function ruleChatBot(request) {
     if (request.startsWith("add recipe")) {
         let recipeName = request.replace("add recipe", "").trim();
         if (recipeName) {
-            addRecipeToFirestore({
+            const recipeData = {
                 name: recipeName,
                 ingredients: [],
                 steps: [],
                 mealType: "Dinner",
                 favorite: false
-            });
+            };
+            console.log("Attempting to add recipe via chatbot:", recipeData);
+            addRecipeToFirestore(recipeData);
             appendMessage(`Recipe ${recipeName} added!`);
             renderRecipes();
         } else appendMessage("Please specify a recipe name to add.");
@@ -887,7 +903,7 @@ aiButton.addEventListener('click', async ()=>{
             appendMessage(response);
         }
     } catch (error) {
-        (0, _loglevelDefault.default).error("Error processing AI request:", error);
+        log.error("Error processing AI request:", error);
         appendMessage("Error: Could not process your request.");
     }
     else appendMessage("Please enter a prompt");
@@ -902,256 +918,12 @@ function appendMessage(message) {
 }
 // QR Code Generation
 qrBtn.addEventListener('click', ()=>{
-    const qrCodeUrl = 'https://pei-tong.github.io/Recipe-Organizer-PWA/'; // 替換為您的 GitHub Pages 鏈接
+    const qrCodeUrl = 'https://pei-tong.github.io/Recipe-Organizer-PWA/';
     const qrCodeWindow = window.open(`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrCodeUrl)}`, '_blank');
     if (!qrCodeWindow) alert("Please allow popups to generate QR code.");
 });
-// Biometric Authentication (Add button for testing)
-document.getElementById("addRecipeBtn").addEventListener("click", async (e)=>{
-    e.preventDefault(); // 阻止表單提交
-    if (await authenticateBiometric()) addRecipeBtn.click(); // 執行原本的添加邏輯
-});
 
-},{"loglevel":"7kRFs","firebase/app":"aM3Fo","firebase/firestore":"8A4BC","@google/generative-ai":"gKJrW","d5305f340704cc0e":"72bEf","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7kRFs":[function(require,module,exports,__globalThis) {
-/*
-* loglevel - https://github.com/pimterry/loglevel
-*
-* Copyright (c) 2013 Tim Perry
-* Licensed under the MIT license.
-*/ (function(root, definition) {
-    "use strict";
-    if (typeof define === 'function' && define.amd) define(definition);
-    else if (0, module.exports) module.exports = definition();
-    else root.log = definition();
-})(this, function() {
-    "use strict";
-    // Slightly dubious tricks to cut down minimized file size
-    var noop = function() {};
-    var undefinedType = "undefined";
-    var isIE = typeof window !== undefinedType && typeof window.navigator !== undefinedType && /Trident\/|MSIE /.test(window.navigator.userAgent);
-    var logMethods = [
-        "trace",
-        "debug",
-        "info",
-        "warn",
-        "error"
-    ];
-    var _loggersByName = {};
-    var defaultLogger = null;
-    // Cross-browser bind equivalent that works at least back to IE6
-    function bindMethod(obj, methodName) {
-        var method = obj[methodName];
-        if (typeof method.bind === 'function') return method.bind(obj);
-        else try {
-            return Function.prototype.bind.call(method, obj);
-        } catch (e) {
-            // Missing bind shim or IE8 + Modernizr, fallback to wrapping
-            return function() {
-                return Function.prototype.apply.apply(method, [
-                    obj,
-                    arguments
-                ]);
-            };
-        }
-    }
-    // Trace() doesn't print the message in IE, so for that case we need to wrap it
-    function traceForIE() {
-        if (console.log) {
-            if (console.log.apply) console.log.apply(console, arguments);
-            else // In old IE, native console methods themselves don't have apply().
-            Function.prototype.apply.apply(console.log, [
-                console,
-                arguments
-            ]);
-        }
-        if (console.trace) console.trace();
-    }
-    // Build the best logging method possible for this env
-    // Wherever possible we want to bind, not wrap, to preserve stack traces
-    function realMethod(methodName) {
-        if (methodName === 'debug') methodName = 'log';
-        if (typeof console === undefinedType) return false; // No method possible, for now - fixed later by enableLoggingWhenConsoleArrives
-        else if (methodName === 'trace' && isIE) return traceForIE;
-        else if (console[methodName] !== undefined) return bindMethod(console, methodName);
-        else if (console.log !== undefined) return bindMethod(console, 'log');
-        else return noop;
-    }
-    // These private functions always need `this` to be set properly
-    function replaceLoggingMethods() {
-        /*jshint validthis:true */ var level = this.getLevel();
-        // Replace the actual methods.
-        for(var i = 0; i < logMethods.length; i++){
-            var methodName = logMethods[i];
-            this[methodName] = i < level ? noop : this.methodFactory(methodName, level, this.name);
-        }
-        // Define log.log as an alias for log.debug
-        this.log = this.debug;
-        // Return any important warnings.
-        if (typeof console === undefinedType && level < this.levels.SILENT) return "No console available for logging";
-    }
-    // In old IE versions, the console isn't present until you first open it.
-    // We build realMethod() replacements here that regenerate logging methods
-    function enableLoggingWhenConsoleArrives(methodName) {
-        return function() {
-            if (typeof console !== undefinedType) {
-                replaceLoggingMethods.call(this);
-                this[methodName].apply(this, arguments);
-            }
-        };
-    }
-    // By default, we use closely bound real methods wherever possible, and
-    // otherwise we wait for a console to appear, and then try again.
-    function defaultMethodFactory(methodName, _level, _loggerName) {
-        /*jshint validthis:true */ return realMethod(methodName) || enableLoggingWhenConsoleArrives.apply(this, arguments);
-    }
-    function Logger(name, factory) {
-        // Private instance variables.
-        var self = this;
-        /**
-       * The level inherited from a parent logger (or a global default). We
-       * cache this here rather than delegating to the parent so that it stays
-       * in sync with the actual logging methods that we have installed (the
-       * parent could change levels but we might not have rebuilt the loggers
-       * in this child yet).
-       * @type {number}
-       */ var inheritedLevel;
-        /**
-       * The default level for this logger, if any. If set, this overrides
-       * `inheritedLevel`.
-       * @type {number|null}
-       */ var defaultLevel;
-        /**
-       * A user-specific level for this logger. If set, this overrides
-       * `defaultLevel`.
-       * @type {number|null}
-       */ var userLevel;
-        var storageKey = "loglevel";
-        if (typeof name === "string") storageKey += ":" + name;
-        else if (typeof name === "symbol") storageKey = undefined;
-        function persistLevelIfPossible(levelNum) {
-            var levelName = (logMethods[levelNum] || 'silent').toUpperCase();
-            if (typeof window === undefinedType || !storageKey) return;
-            // Use localStorage if available
-            try {
-                window.localStorage[storageKey] = levelName;
-                return;
-            } catch (ignore) {}
-            // Use session cookie as fallback
-            try {
-                window.document.cookie = encodeURIComponent(storageKey) + "=" + levelName + ";";
-            } catch (ignore) {}
-        }
-        function getPersistedLevel() {
-            var storedLevel;
-            if (typeof window === undefinedType || !storageKey) return;
-            try {
-                storedLevel = window.localStorage[storageKey];
-            } catch (ignore) {}
-            // Fallback to cookies if local storage gives us nothing
-            if (typeof storedLevel === undefinedType) try {
-                var cookie = window.document.cookie;
-                var cookieName = encodeURIComponent(storageKey);
-                var location = cookie.indexOf(cookieName + "=");
-                if (location !== -1) storedLevel = /^([^;]+)/.exec(cookie.slice(location + cookieName.length + 1))[1];
-            } catch (ignore) {}
-            // If the stored level is not valid, treat it as if nothing was stored.
-            if (self.levels[storedLevel] === undefined) storedLevel = undefined;
-            return storedLevel;
-        }
-        function clearPersistedLevel() {
-            if (typeof window === undefinedType || !storageKey) return;
-            // Use localStorage if available
-            try {
-                window.localStorage.removeItem(storageKey);
-            } catch (ignore) {}
-            // Use session cookie as fallback
-            try {
-                window.document.cookie = encodeURIComponent(storageKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-            } catch (ignore) {}
-        }
-        function normalizeLevel(input) {
-            var level = input;
-            if (typeof level === "string" && self.levels[level.toUpperCase()] !== undefined) level = self.levels[level.toUpperCase()];
-            if (typeof level === "number" && level >= 0 && level <= self.levels.SILENT) return level;
-            else throw new TypeError("log.setLevel() called with invalid level: " + input);
-        }
-        /*
-       *
-       * Public logger API - see https://github.com/pimterry/loglevel for details
-       *
-       */ self.name = name;
-        self.levels = {
-            "TRACE": 0,
-            "DEBUG": 1,
-            "INFO": 2,
-            "WARN": 3,
-            "ERROR": 4,
-            "SILENT": 5
-        };
-        self.methodFactory = factory || defaultMethodFactory;
-        self.getLevel = function() {
-            if (userLevel != null) return userLevel;
-            else if (defaultLevel != null) return defaultLevel;
-            else return inheritedLevel;
-        };
-        self.setLevel = function(level, persist) {
-            userLevel = normalizeLevel(level);
-            if (persist !== false) persistLevelIfPossible(userLevel);
-            // NOTE: in v2, this should call rebuild(), which updates children.
-            return replaceLoggingMethods.call(self);
-        };
-        self.setDefaultLevel = function(level) {
-            defaultLevel = normalizeLevel(level);
-            if (!getPersistedLevel()) self.setLevel(level, false);
-        };
-        self.resetLevel = function() {
-            userLevel = null;
-            clearPersistedLevel();
-            replaceLoggingMethods.call(self);
-        };
-        self.enableAll = function(persist) {
-            self.setLevel(self.levels.TRACE, persist);
-        };
-        self.disableAll = function(persist) {
-            self.setLevel(self.levels.SILENT, persist);
-        };
-        self.rebuild = function() {
-            if (defaultLogger !== self) inheritedLevel = normalizeLevel(defaultLogger.getLevel());
-            replaceLoggingMethods.call(self);
-            if (defaultLogger === self) for(var childName in _loggersByName)_loggersByName[childName].rebuild();
-        };
-        // Initialize all the internal levels.
-        inheritedLevel = normalizeLevel(defaultLogger ? defaultLogger.getLevel() : "WARN");
-        var initialLevel = getPersistedLevel();
-        if (initialLevel != null) userLevel = normalizeLevel(initialLevel);
-        replaceLoggingMethods.call(self);
-    }
-    /*
-     *
-     * Top-level API
-     *
-     */ defaultLogger = new Logger();
-    defaultLogger.getLogger = function getLogger(name) {
-        if (typeof name !== "symbol" && typeof name !== "string" || name === "") throw new TypeError("You must supply a name when creating a logger.");
-        var logger = _loggersByName[name];
-        if (!logger) logger = _loggersByName[name] = new Logger(name, defaultLogger.methodFactory);
-        return logger;
-    };
-    // Grab the current global log variable in case of overwrite
-    var _log = typeof window !== undefinedType ? window.log : undefined;
-    defaultLogger.noConflict = function() {
-        if (typeof window !== undefinedType && window.log === defaultLogger) window.log = _log;
-        return defaultLogger;
-    };
-    defaultLogger.getLoggers = function getLoggers() {
-        return _loggersByName;
-    };
-    // ES6 default export, for compatibility
-    defaultLogger['default'] = defaultLogger;
-    return defaultLogger;
-});
-
-},{}],"aM3Fo":[function(require,module,exports,__globalThis) {
+},{"firebase/app":"aM3Fo","firebase/firestore":"8A4BC","@google/generative-ai":"gKJrW","d5305f340704cc0e":"72bEf","692aca2701c02367":"dL7zX"}],"aM3Fo":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _app = require("@firebase/app");
@@ -30750,6 +30522,74 @@ function getOrigin(url) {
 exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
+
+},{}],"dL7zX":[function(require,module,exports,__globalThis) {
+module.exports = require("52e9507f8ab00263")(require("cce6cfa378b6bffd").getBundleURL('1G2bZ') + "loglevel.6d80cda9.js").catch((err)=>{
+    delete module.bundle.cache[module.id];
+    throw err;
+}).then(()=>module.bundle.root('7kRFs'));
+
+},{"52e9507f8ab00263":"61B45","cce6cfa378b6bffd":"lgJ39","7kRFs":"7kRFs"}],"61B45":[function(require,module,exports,__globalThis) {
+"use strict";
+var cacheLoader = require("ca2a84f7fa4a3bb0");
+module.exports = cacheLoader(function(bundle) {
+    return new Promise(function(resolve, reject) {
+        // Don't insert the same script twice (e.g. if it was already in the HTML)
+        var existingScripts = document.getElementsByTagName('script');
+        if ([].concat(existingScripts).some(function(script) {
+            return script.src === bundle;
+        })) {
+            resolve();
+            return;
+        }
+        var preloadLink = document.createElement('link');
+        preloadLink.href = bundle;
+        preloadLink.rel = 'preload';
+        preloadLink.as = 'script';
+        document.head.appendChild(preloadLink);
+        var script = document.createElement('script');
+        script.async = true;
+        script.type = 'text/javascript';
+        script.src = bundle;
+        script.onerror = function(e) {
+            var error = new TypeError("Failed to fetch dynamically imported module: ".concat(bundle, ". Error: ").concat(e.message));
+            script.onerror = script.onload = null;
+            script.remove();
+            reject(error);
+        };
+        script.onload = function() {
+            script.onerror = script.onload = null;
+            resolve();
+        };
+        document.getElementsByTagName('head')[0].appendChild(script);
+    });
+});
+
+},{"ca2a84f7fa4a3bb0":"j49pS"}],"j49pS":[function(require,module,exports,__globalThis) {
+"use strict";
+var cachedBundles = {};
+var cachedPreloads = {};
+var cachedPrefetches = {};
+function getCache(type) {
+    switch(type){
+        case 'preload':
+            return cachedPreloads;
+        case 'prefetch':
+            return cachedPrefetches;
+        default:
+            return cachedBundles;
+    }
+}
+module.exports = function(loader, type) {
+    return function(bundle) {
+        var cache = getCache(type);
+        if (cache[bundle]) return cache[bundle];
+        return cache[bundle] = loader.apply(null, arguments).catch(function(e) {
+            delete cache[bundle];
+            throw e;
+        });
+    };
+};
 
 },{}]},["eCF1U","igcvL"], "igcvL", "parcelRequire94c2")
 
