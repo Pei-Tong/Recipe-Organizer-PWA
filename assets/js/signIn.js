@@ -1,5 +1,5 @@
 // signIn.js
-import { auth, db, getDoc, doc } from "./firebase.js";
+import { auth } from "./firebase.js";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 // Import loglevel with fallback
