@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "parcel assets/html/*.html",
-    "build": "parcel build assets/html/*.html",
+    "build": "parcel build assets/html/*.html --public-url ./",
     "dev:build": "parcel build --dist-dir dist --no-content-hash index.html",
     "dev:run": "npm run dev:build && npm run dev:start",
     "dev:start": "parcel serve --dist-dir dist index.html",
@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@firebase/testing": "^0.20.11",
     "@parcel/packager-raw-url": "^2.13.3",
     "@parcel/transformer-webmanifest": "^2.13.3",
     "assert": "^2.1.0",
@@ -38,6 +39,7 @@
     "globals": "^15.15.0",
     "https-browserify": "^1.0.0",
     "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",

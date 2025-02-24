@@ -923,7 +923,7 @@ qrBtn.addEventListener('click', ()=>{
     if (!qrCodeWindow) alert("Please allow popups to generate QR code.");
 });
 
-},{"58f1d929b63f526f":"3XA7W","firebase/app":"aM3Fo","firebase/firestore":"8A4BC","@google/generative-ai":"gKJrW","67733705052c8443":"7wSZb"}],"3XA7W":[function(require,module,exports,__globalThis) {
+},{"58f1d929b63f526f":"3XA7W","67733705052c8443":"7wSZb","firebase/app":"aM3Fo","firebase/firestore":"8A4BC","@google/generative-ai":"gKJrW"}],"3XA7W":[function(require,module,exports,__globalThis) {
 module.exports = require("e29d5efd6f5ccc79")(require("c9b0ead6a116d2f0").getBundleURL('fh2Ay') + "loglevel.6d80cda9.js").catch((err)=>{
     delete module.bundle.cache[module.id];
     throw err;

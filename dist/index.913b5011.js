@@ -626,7 +626,7 @@ const app = (0, _app.initializeApp)(firebaseConfig);
 const db = (0, _firestore.getFirestore)(app);
 const auth = (0, _auth.getAuth)(app); // 初始化 Authentication
 
-},{"firebase/app":"aM3Fo","firebase/firestore":"8A4BC","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","firebase/auth":"79vzg"}],"79vzg":[function(require,module,exports,__globalThis) {
+},{"firebase/app":"aM3Fo","firebase/firestore":"8A4BC","firebase/auth":"79vzg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"79vzg":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _auth = require("@firebase/auth");

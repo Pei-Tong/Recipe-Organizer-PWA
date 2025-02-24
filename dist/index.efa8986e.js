@@ -649,7 +649,7 @@ biometricLoginButton.addEventListener("click", ()=>{
 // Placeholder for biometric authentication
 });
 
-},{"./firebase.js":"38sjH","e7f7b3c721cc3410":"fWPow","5f83cd24085fb610":"7yIeQ","firebase/auth":"79vzg"}],"fWPow":[function(require,module,exports,__globalThis) {
+},{"e7f7b3c721cc3410":"fWPow","5f83cd24085fb610":"7yIeQ","./firebase.js":"38sjH","firebase/auth":"79vzg"}],"fWPow":[function(require,module,exports,__globalThis) {
 module.exports = require("e31aa917ffaa520f")(require("b9ec04914d9be403").getBundleURL('1bKvJ') + "loglevel.6d80cda9.js").catch((err)=>{
     delete module.bundle.cache[module.id];
     throw err;

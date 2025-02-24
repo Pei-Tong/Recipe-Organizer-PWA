@@ -12,7 +12,7 @@ export default [
   js.configs.recommended,
   html.configs.recommended,
   {
-    ignores: ['node_modules/', 'dist/', 'docs/, 'tests/recipe.test.js'],
+    ignores: ['node_modules/', 'dist/', 'docs/'],
   },
   {
     files: ['**/*.js'],
@@ -26,6 +26,18 @@ export default [
     rules: {
       'indent': ['error', 2],
       'semi': ['error', 'always'],
+    },
+  },
+  // 為測試檔案添加 Jest 環境
+  {
+    files: ['**/*.test.js'],
+    languageOptions: {
+      globals: {
+        ...globals.jest, // 添加 Jest 全局變數
+      },
+    },
+    rules: {
+      'no-unused-vars': 'off', // 測試檔案可能有更多未使用的變數，略過警告
     },
   },
 ];
