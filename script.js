@@ -33,7 +33,7 @@ try {
 
 // Initialize Firebase
 import { initializeApp } from "firebase/app";
-import { getDocs, addDoc, getFirestore, collection, deleteDoc, doc, getDoc, updateDoc, query, where } from "firebase/firestore";
+import { getDocs, addDoc, getFirestore, collection, deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 
 // Firebase configuration
 const firebaseConfig = {

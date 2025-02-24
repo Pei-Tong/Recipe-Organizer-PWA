@@ -91,7 +91,7 @@
 140C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\firebase\compat\functions\dist\esm\compat\app-check\index.d.ts133846717279242171 0
 132C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\google-gax\node_modules\@grpc\grpc-js\src\constants.ts133846717345869091 0
 122C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\web-vitals\dist\modules\lib\getSelector.d.ts133846717264602892 0
-95C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@msgpackr-extract133848317555683024 1
+95C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@msgpackr-extract133848373615010595 1
 105C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\lru-memoizer\lib\async.d.ts133846717341428313 0
 122C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@firebase\remote-config-compat\dist\esm\test133848216750941985 1
 117C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\firebase-admin\lib\firestore\index.d.ts133846717344783874 0
@@ -112,7 +112,7 @@
 117C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@firebase\firestore-compat\dist\src\api133848216746173323 1
 118C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\firebase\compat\analytics\dist\app-check133848216817465630 1
 118C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\type-fest\source\conditional-except.d.ts133846717463307006 0
-69C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\docs133848362150378916 1
+69C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\docs133848375471166696 1
 133C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@swc\helpers\_\_ts_add_disposable_resource\package.json133846717475753808 0
 119C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\firebase\vertexai\dist\storage\index.d.ts133846717291165519 0
 100C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\import-fresh\readme.md133846717462876947 0
@@ -127,12 +127,12 @@
 111C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\https-proxy-agent\dist\index.d.ts133846717340753178 0
 120C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\caniuse-lite\data\features\css-autofill.js133846717471197967 0
 123C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\proto3-json-serializer\build\src\value.js.map133846717341468318 0
-75C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\index.html133848333206349340 0
+75C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\index.html133848364462652632 0
 124C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\firebase\compat\messaging\dist\esm\compat\auth133848216825660507 1
 86C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\dir-glob133848216801106858 1
 98C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\node-fetch\README.md133846717340318085 0
 119C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@grpc\grpc-js\build\src\stream-decoder.js133846717264742895 0
-77C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules133848317555673010 1
+77C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules133848373615000573 1
 130C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\firebase\compat\auth\dist\esm\compat\index.perf.d.ts133846717292080728 0
 99C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\yargs\locales\hu.json133846717262392600 0
 113C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\firebase\vertexai\dist\data-connect133848216838482687 1
@@ -152,14 +152,14 @@
 113C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\firebase\installations\package.json133846717265758065 0
 92C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\sha.js\hash.js133847094956396621 0
 128C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@opentelemetry\api\build\src\experimental\index.js133846717343139691 0
-82C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\package-lock.json133848317556976472 0
+82C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\package-lock.json133848373616112415 0
 118C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\jose\dist\node\esm\jws\general\verify.js133846717345659074 0
 111C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\uuid\dist\cjs-browser\native.d.ts133846717343418617 0
 136C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\google-gax\node_modules\@grpc\grpc-js\src\generated\google133848216849915670 1
 100C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\webidl-conversions\lib133848216879356747 1
 91C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\which\LICENSE133847094954532566 0
 136C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@grpc\grpc-js\src\generated\google\protobuf\StringValue.ts133846717267588387 0
-96C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\.package-lock.json133848317557802853 0
+96C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\.package-lock.json133848373616974187 0
 105C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\node-forge\lib\tlssocket.js133846717342569686 0
 113C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\firebase\storage\dist\esm\firestore133848216838005259 1
 134C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\google-gax\build\protos\google\monitoring\v3\group.proto133846717344147564 0
@@ -188,7 +188,7 @@
 90C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@swc\helpers133848216783843875 1
 135C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@firebase\auth\dist\node-esm\src\platform_node\index.d.ts133846717272084340 0
 124C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\firebase\auth\web-extension\dist\esm\messaging133848216817171751 1
-74C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\script.js133848323997354385 0
+74C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\script.js133848374210638173 0
 129C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\firebase\compat\analytics\dist\esm\compat\analytics133848216817835744 1
 99C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\y18n\build\lib\cjs.js133846717260412273 0
 97C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\randombytes\test.js133847094956837404 0
@@ -277,7 +277,7 @@
 111C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\firebase\app\dist\compat\database133848216813342889 1
 84C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@types133848216786415305 1
 102C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\node-forge\lib\random.js133846717342258311 0
-85C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@parcel133848317555683024 1
+85C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@parcel133848373615010595 1
 94C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\jwks-rsa\LICENSE133846717338877511 0
 99C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\jose\dist\browser\jws133848216855292380 1
 96C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\webidl-conversions133848216879354783 1
@@ -365,7 +365,7 @@
 100C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\semver\ranges\valid.js133846717342038317 0
 108C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\object-inspect\util.inspect.js133847094963414934 0
 145C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@google-cloud\firestore\build\protos\google\protobuf\duration.proto133846717343757559 0
-83C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@lmdb133848317555683024 1
+83C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@lmdb133848373615010595 1
 126C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\firebase\compat\messaging\dist\esm\installations133848216825811463 1
 114C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@firebase\auth\dist\node\internal.js133846717263627728 0
 114C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\elliptic\lib\elliptic\eddsa\index.js133847094961637322 0
@@ -419,7 +419,7 @@
 102C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\uuid\dist\esm\index.d.ts133846717343269734 0
 92C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\protobufjs\ext133848216869263385 1
 109C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\jose\dist\node\esm\lib\epoch.js133846717343747589 0
-82C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@swc133848317555683024 1
+82C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@swc133848373615000573 1
 131C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\firebase\firestore\lite\dist\esm\functions\index.d.ts133846717285074593 0
 121C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\caniuse-lite\data\features\dispatchevent.js133846717475408694 0
 146C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@opentelemetry\api\build\src\experimental\trace\SugaredTracer.js.map133846717346772889 0
@@ -19171,7 +19171,7 @@
 127C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@google-cloud\storage\build\esm\src\nodejs-common133848216757553287 1
 131C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@google-cloud\storage\build\esm\src\notification.d.ts133846717343189698 0
 129C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@google-cloud\storage\build\esm\src\notification.js133846717341838319 0
-80C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\docs\index.html133848362150338925 0
+80C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\docs\index.html133848375471156178 0
 135C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@google-cloud\storage\build\esm\src\resumable-upload.d.ts133846717343209690 0
 133C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@google-cloud\storage\build\esm\src\resumable-upload.js133846717341928342 0
 123C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\node_modules\@google-cloud\storage\build\esm\src\signer.js133846717342118318 0
@@ -22483,4 +22483,4 @@
 90C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\dist\manifest.webmanifest133848360966739768 0
 96C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\dist\service-worker.75769289.js133848360967176237 0
 100C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\dist\service-worker.75769289.js.map133848360967196304 0
-93C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\.github\workflows\deploy.yml133848224775993274 0
+93C:\Users\peito\Documents\0.Web_Local\Trends\Recipe-Organizer-PWA\.github\workflows\deploy.yml133848375273462142 0
