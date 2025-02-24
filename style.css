@@ -1,13 +1,18 @@
+/* 基礎樣式 */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 20px;
-  background-color: #f5f5f5; /* 更溫暖的背景，適合美食主題 */
+  background-color: #f5f5f5;
+  line-height: 1.6;
+  color: #333;
 }
 
 h1 {
   color: #4a2c2c; /* 深棕色，適合美食主題 */
   text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
 }
 
 .container {
@@ -15,85 +20,109 @@ h1 {
   margin: 0 auto;
   background-color: #fff;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
+/* 表單和標籤 */
 #recipeForm label {
   display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+  margin-bottom: 8px;
+  font-weight: 600;
   color: #4a2c2c;
-  
-}
-
-#recipeForm {
-  margin-bottom: 50px;
-}
-
-#addRecipeBtn {
-  padding: 10px 20px;
-  background-color: #4a2c2c;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
+  font-size: 1.1rem;
 }
 
 #recipeName, #ingredients, #steps, #filterIngredient {
-  padding: 10px;
+  padding: 12px;
   width: 100%;
-  margin-bottom: 10px;
-  border: 3px solid #ddd;
-  border-radius: 4px;
+  margin-bottom: 15px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+#recipeName:focus, #ingredients:focus, #steps:focus, #filterIngredient:focus {
+  border-color: #4a2c2c;
+  outline: none;
+  box-shadow: 0 0 5px rgba(74, 44, 44, 0.3);
 }
 
 #ingredients, #steps {
-  height: 100px;
+  height: 120px;
   resize: vertical;
 }
 
 #mealType, #filterMealType {
-  padding: 10px;
+  padding: 12px;
   width: 100%;
-  margin-bottom: 10px;
-  border: 3px solid #ddd;
-  border-radius: 4px;
+  margin-bottom: 15px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #fff;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml,<svg fill="%234a2c2c" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
 }
 
+#mealType:focus, #filterMealType:focus {
+  border-color: #4a2c2c;
+  outline: none;
+  box-shadow: 0 0 5px rgba(74, 44, 44, 0.3);
+}
+
+/* 按鈕樣式 */
 button {
-  padding: 10px 20px;
-  background-color: #4a2c2c;
+  padding: 12px 20px;
+  background-color: #5d4037; /* 更深的棕色，增加對比 */
   color: white;
   border: none;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
-  background-color: #6b4e4e;
+  background-color: #8d6e63; /* 稍淺的棕色，增加互動性 */
+  transform: translateY(-2px);
 }
 
+button:active {
+  transform: translateY(0);
+}
+
+/* 食譜列表 */
 #recipeList {
   list-style-type: none;
   padding: 0;
+  margin-top: 20px;
 }
 
 #recipeList li {
   background-color: #fff;
   padding: 15px;
-  margin: 5px 0;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  margin: 10px 0;
+  border: 2px solid #ddd;
+  border-radius: 8px;
   cursor: pointer;
   color: #333;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 #recipeList li:hover {
   background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #recipeList li .actions {
@@ -102,75 +131,121 @@ button:hover {
 }
 
 #recipeList li button {
-  padding: 5px 10px;
-  font-size: 12px;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  background-color: #6d4c41; /* 稍淡的按鈕顏色 */
 }
 
+#recipeList li button:hover {
+  background-color: #8d6e63;
+}
+
+/* 過濾區塊 */
 #filterSection {
   margin-top: 20px;
-  padding: 10px;
+  padding: 15px;
   background-color: #f9f9f9;
-  border-radius: 4px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
 }
 
 #filterSection label {
-  margin-right: 10px;
-  font-weight: bold;
+  margin-right: 15px;
+  font-weight: 600;
+  font-size: 1rem;
 }
 
+/* 聊天機器人 */
 #chatbot-container {
   margin-top: 20px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
   background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #chat-input {
-  padding: 10px;
+  padding: 12px;
   width: 70%;
   margin-right: 10px;
-  border: 3px solid #ddd;
-  border-radius: 4px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+#chat-input:focus {
+  border-color: #4a2c2c;
+  outline: none;
+  box-shadow: 0 0 5px rgba(74, 44, 44, 0.3);
 }
 
 .history {
-  margin: 5px 0;
-  padding: 5px;
+  margin: 10px 0;
+  padding: 10px;
   border-bottom: 1px solid #ddd;
   color: #333;
+  font-size: 0.9rem;
 }
 
 #qr-btn {
   margin-left: 10px;
-  padding: 10px 20px;
-  background-color: #4a2c2c;
+  padding: 12px 20px;
+  background-color: #5d4037;
   color: white;
   border: none;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #qr-btn:hover {
-  background-color: #6b4e4e;
+  background-color: #8d6e63;
+  transform: translateY(-2px);
+}
+
+#qr-btn:active {
+  transform: translateY(0);
 }
 
 /* 響應式設計 */
 @media (max-width: 600px) {
-  .container {
+  body {
       padding: 10px;
   }
 
+  .container {
+      padding: 10px;
+      border-radius: 6px;
+  }
+
+  h1 {
+      font-size: 1.5rem;
+  }
+
   #recipeName, #ingredients, #steps, #filterIngredient, #mealType, #filterMealType {
-      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+  }
+
+  #ingredients, #steps {
+      height: 100px;
   }
 
   button, #qr-btn {
       width: 100%;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      padding: 10px;
+      font-size: 0.9rem;
   }
 
   #recipeList li {
+      padding: 12px;
+      margin: 8px 0;
       flex-direction: column;
       align-items: flex-start;
   }
@@ -178,5 +253,70 @@ button:hover {
   #recipeList li .actions {
       margin-top: 10px;
       width: 100%;
+  }
+
+  #recipeList li button {
+      padding: 6px 12px;
+      font-size: 0.8rem;
+  }
+
+  #filterSection {
+      padding: 10px;
+  }
+
+  #filterSection label {
+      margin-right: 10px;
+  }
+
+  #chatbot-container {
+      padding: 10px;
+  }
+
+  #chat-input {
+      width: 60%;
+      padding: 10px;
+      font-size: 0.9rem;
+  }
+
+  .history {
+      margin: 8px 0;
+      padding: 8px;
+      font-size: 0.8rem;
+  }
+}
+
+/* 更大的屏幕 */
+@media (min-width: 1024px) {
+  .container {
+      max-width: 1000px;
+      padding: 30px;
+  }
+
+  h1 {
+      font-size: 2.5rem;
+  }
+
+  #recipeName, #ingredients, #steps, #filterIngredient, #mealType, #filterMealType {
+      padding: 14px;
+      font-size: 1.1rem;
+  }
+
+  #ingredients, #steps {
+      height: 150px;
+  }
+
+  button, #qr-btn {
+      padding: 14px 24px;
+      font-size: 1.1rem;
+  }
+
+  #recipeList li {
+      padding: 20px;
+      margin: 12px 0;
+  }
+
+  #recipeList li button {
+      padding: 10px 18px;
+      font-size: 1rem;
   }
 }
