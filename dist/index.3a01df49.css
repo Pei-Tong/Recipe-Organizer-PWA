@@ -2,7 +2,7 @@ body {
   color: #333;
   background-color: #f5f5f5;
   margin: 0;
-  padding: 20px;
+  padding: 10px;
   font-family: Arial, sans-serif;
   line-height: 1.6;
 }
@@ -26,18 +26,19 @@ h1 {
 
 #recipeForm label {
   color: #4a2c2c;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   font-size: 1.1rem;
   font-weight: 600;
   display: block;
 }
 
 #recipeName, #ingredients, #steps, #filterIngredient {
+  box-sizing: border-box;
   border: 2px solid #ddd;
-  border-radius: 6px;
+  border-radius: 8px;
   width: 100%;
-  margin-bottom: 15px;
-  padding: 12px;
+  margin-bottom: 20px;
+  padding: 14px;
   font-size: 1rem;
   transition: border-color .3s;
 }
@@ -53,6 +54,13 @@ h1 {
   height: 120px;
 }
 
+#ingredients::placeholder, #steps::placeholder, #filterIngredient::placeholder {
+  color: #757575;
+  overflow-wrap: break-word;
+  font-size: .9rem;
+  font-style: italic;
+}
+
 #mealType, #filterMealType {
   appearance: none;
   background-color: #fff;
@@ -60,10 +68,10 @@ h1 {
   background-position: right 10px center;
   background-repeat: no-repeat;
   border: 2px solid #ddd;
-  border-radius: 6px;
+  border-radius: 8px;
   width: 100%;
-  margin-bottom: 15px;
-  padding: 12px;
+  margin-bottom: 20px;
+  padding: 14px;
   font-size: 1rem;
 }
 
@@ -78,8 +86,10 @@ button {
   cursor: pointer;
   background-color: #5d4037;
   border: none;
-  border-radius: 6px;
-  padding: 12px 20px;
+  border-radius: 8px;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 14px 24px;
   font-size: 1rem;
   transition: background-color .3s, transform .1s;
   box-shadow: 0 2px 4px #0000001a;
@@ -108,10 +118,11 @@ button:active {
   border-radius: 8px;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 0;
+  margin: 12px 0;
   padding: 15px;
   transition: background-color .3s, box-shadow .3s;
   display: flex;
+  overflow: hidden;
 }
 
 #recipeList li:hover {
@@ -120,13 +131,15 @@ button:active {
 }
 
 #recipeList li .actions {
+  flex-wrap: wrap;
   gap: 10px;
   display: flex;
 }
 
 #recipeList li button {
   background-color: #6d4c41;
-  padding: 8px 15px;
+  border-radius: 6px;
+  padding: 10px 18px;
   font-size: .9rem;
 }
 
@@ -140,6 +153,7 @@ button:active {
   border-radius: 8px;
   margin-top: 20px;
   padding: 15px;
+  overflow: hidden;
 }
 
 #filterSection label {
@@ -154,10 +168,12 @@ button:active {
   border-radius: 8px;
   margin-top: 20px;
   padding: 15px;
+  overflow: hidden;
   box-shadow: 0 2px 4px #0000001a;
 }
 
 #chat-input {
+  box-sizing: border-box;
   border: 2px solid #ddd;
   border-radius: 6px;
   width: 70%;
@@ -175,6 +191,7 @@ button:active {
 
 .history {
   color: #333;
+  overflow-wrap: break-word;
   border-bottom: 1px solid #ddd;
   margin: 10px 0;
   padding: 10px;
@@ -205,61 +222,73 @@ button:active {
 
 @media (width <= 600px) {
   body {
-    padding: 10px;
+    padding: 5px;
   }
 
   .container {
-    border-radius: 6px;
+    border-radius: 8px;
     padding: 10px;
   }
 
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+  }
+
+  #recipeForm label {
+    margin-bottom: 10px;
+    font-size: .9rem;
   }
 
   #recipeName, #ingredients, #steps, #filterIngredient, #mealType, #filterMealType {
-    margin-bottom: 12px;
-    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    padding: 12px;
     font-size: .9rem;
   }
 
   #ingredients, #steps {
-    height: 100px;
+    height: 90px;
+  }
+
+  #ingredients::placeholder, #steps::placeholder, #filterIngredient::placeholder {
+    font-size: .8rem;
   }
 
   button, #qr-btn {
-    width: 100%;
     margin-bottom: 12px;
-    padding: 10px;
+    padding: 12px 18px;
     font-size: .9rem;
   }
 
   #recipeList li {
-    flex-direction: column;
-    align-items: flex-start;
+    border-radius: 6px;
     margin: 8px 0;
-    padding: 12px;
+    padding: 10px;
   }
 
   #recipeList li .actions {
+    flex-direction: column;
+    gap: 8px;
     width: 100%;
-    margin-top: 10px;
   }
 
   #recipeList li button {
-    padding: 6px 12px;
+    padding: 8px 14px;
     font-size: .8rem;
   }
 
   #filterSection {
+    margin-top: 15px;
     padding: 10px;
   }
 
   #filterSection label {
     margin-right: 10px;
+    font-size: .9rem;
   }
 
   #chatbot-container {
+    margin-top: 15px;
     padding: 10px;
   }
 
@@ -273,6 +302,44 @@ button:active {
     margin: 8px 0;
     padding: 8px;
     font-size: .8rem;
+  }
+
+  #qr-btn {
+    width: 38%;
+  }
+}
+
+@media (width >= 601px) and (width <= 1024px) {
+  .container {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  #recipeName, #ingredients, #steps, #filterIngredient, #mealType, #filterMealType {
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  #ingredients, #steps {
+    height: 110px;
+  }
+
+  button, #qr-btn {
+    padding: 12px 20px;
+    font-size: 1rem;
+  }
+
+  #recipeList li {
+    padding: 12px;
+  }
+
+  #recipeList li button {
+    padding: 8px 16px;
+    font-size: .9rem;
   }
 }
 
