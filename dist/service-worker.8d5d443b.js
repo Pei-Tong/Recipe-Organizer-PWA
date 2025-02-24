@@ -1,0 +1,2 @@
+const e=["/Recipe-Organizer-PWA/","/Recipe-Organizer-PWA/index.html","/Recipe-Organizer-PWA/style.css","/Recipe-Organizer-PWA/app.js","/Recipe-Organizer-PWA/manifest.json","/Recipe-Organizer-PWA/icons/icon-128.png","/Recipe-Organizer-PWA/icons/icon-512.png"];self.addEventListener("install",i=>{i.waitUntil(caches.open("recipe-organizer-pwa-cache-v1").then(i=>i.addAll(e)))}),self.addEventListener("fetch",e=>{e.respondWith(caches.match(e.request).then(i=>i||fetch(e.request)))});
+//# sourceMappingURL=service-worker.8d5d443b.js.map

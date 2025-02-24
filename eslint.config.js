@@ -1,18 +1,31 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
+import globals from 'globals';
+import js from '@eslint/js';
+import html from 'eslint-plugin-html';
 
-/** @type {import('eslint').Linter.Config[]} */
+/** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
-  {languageOptions: { globals: globals.browser }},
-  pluginJs.configs.recommended,
   {
-    ignores: ["node_modules/", "dist/", "docs/", "tests/recipe.test.js"],
+    languageOptions: {
+      globals: globals.browser,
+    },
+  },
+  js.configs.recommended,
+  html.configs.recommended,
+  {
+    ignores: ['node_modules/', 'dist/', 'docs/, 'tests/recipe.test.js'],
   },
   {
-  rules: {
-    "no-unused-vars": "warn",
-    "no-undef": "warn"
+    files: ['**/*.js'],
+    rules: {
+      'no-unused-vars': 'warn',
+      'no-undef': 'warn',
+    },
   },
-  files: ["*.js"]
+  {
+    files: ['**/*.html'],
+    rules: {
+      'indent': ['error', 2],
+      'semi': ['error', 'always'],
+    },
   },
 ];

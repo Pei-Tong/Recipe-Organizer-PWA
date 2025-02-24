@@ -4,8 +4,8 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build --dist-dir docs --public-url /Recipe-Organizer-PWA/ index.html",
+    "start": "parcel assets/html/*.html",
+    "build": "parcel build assets/html/*.html",
     "dev:build": "parcel build --dist-dir dist --no-content-hash index.html",
     "dev:run": "npm run dev:build && npm run dev:start",
     "dev:start": "parcel serve --dist-dir dist index.html",
@@ -32,6 +32,7 @@
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.1",
     "eslint": "^9.21.0",
+    "eslint-plugin-html": "^8.1.2",
     "eslint-plugin-jest": "^28.11.0",
     "events": "^3.3.0",
     "globals": "^15.15.0",
