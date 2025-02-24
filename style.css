@@ -2,7 +2,7 @@
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;
-  padding: 10px; /* 減少移動設備上的內邊距 */
+  padding: 20px;
   background-color: #f5f5f5;
   line-height: 1.6;
   color: #333;
@@ -28,21 +28,21 @@ h1 {
 /* 表單和標籤 */
 #recipeForm label {
   display: block;
-  margin-bottom: 12px; /* 增加標籤與輸入框的間距 */
+  margin-bottom: 12px;
   font-weight: 600;
   color: #4a2c2c;
   font-size: 1.1rem;
 }
 
 #recipeName, #ingredients, #steps, #filterIngredient {
-  padding: 14px; /* 增加觸摸區域 */
+  padding: 14px;
   width: 100%;
-  margin-bottom: 20px; /* 增加間距，防止溢出 */
+  margin-bottom: 20px;
   border: 2px solid #ddd;
   border-radius: 8px;
   font-size: 1rem;
   transition: border-color 0.3s ease;
-  box-sizing: border-box; /* 確保內邊距不影響寬度 */
+  box-sizing: border-box;
 }
 
 #recipeName:focus, #ingredients:focus, #steps:focus, #filterIngredient:focus {
@@ -52,15 +52,15 @@ h1 {
 }
 
 #ingredients, #steps {
-  height: 120px; /* 適中高度，方便輸入 */
+  height: 120px;
   resize: vertical;
 }
 
 #ingredients::placeholder, #steps::placeholder, #filterIngredient::placeholder {
-  color: #757575; /* 更深的灰色提示文字，增加可讀性 */
+  color: #757575;
   font-style: italic;
-  font-size: 0.9rem; /* 減小占位符文字大小，防止溢出 */
-  overflow-wrap: break-word; /* 允許文字換行 */
+  font-size: 0.9rem;
+  overflow-wrap: break-word;
 }
 
 #mealType, #filterMealType {
@@ -77,6 +77,12 @@ h1 {
   background-image: url('data:image/svg+xml,<svg fill="%234a2c2c" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
   background-repeat: no-repeat;
   background-position: right 10px center;
+  color: #4a2c2c; /* 將文字顏色改為棕色，與標籤一致 */
+}
+
+/* 確保 select 選項文字顏色也一致 */
+#mealType option, #filterMealType option {
+  color: #333; /* 選項文字顏色改為黑色，確保可讀性 */
 }
 
 #mealType:focus, #filterMealType:focus {
@@ -87,7 +93,7 @@ h1 {
 
 /* 按鈕樣式 */
 button {
-  padding: 14px 24px; /* 增加觸摸區域 */
+  padding: 14px 24px;
   background-color: #5d4037;
   color: white;
   border: none;
@@ -96,7 +102,7 @@ button {
   font-size: 1rem;
   transition: background-color 0.3s ease, transform 0.1s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 100%; /* 確保按鈕在手機上不溢出 */
+  width: 100%;
   margin-bottom: 15px;
 }
 
@@ -128,7 +134,7 @@ button:active {
   justify-content: space-between;
   align-items: center;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  overflow: hidden; /* 防止內容溢出 */
+  overflow: hidden;
 }
 
 #recipeList li:hover {
@@ -139,7 +145,7 @@ button:active {
 #recipeList li .actions {
   display: flex;
   gap: 10px;
-  flex-wrap: wrap; /* 允許按鈕在小屏幕上換行 */
+  flex-wrap: wrap;
 }
 
 #recipeList li button {
@@ -160,7 +166,7 @@ button:active {
   background-color: #f9f9f9;
   border-radius: 8px;
   border: 2px solid #ddd;
-  overflow: hidden; /* 防止內容溢出 */
+  overflow: hidden;
 }
 
 #filterSection label {
@@ -177,12 +183,12 @@ button:active {
   border-radius: 8px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow: hidden; /* 防止內容溢出 */
+  overflow: hidden;
 }
 
 #chat-input {
-  padding: 12px;
-  width: 70%;
+  padding: 14px;
+  width: 65%; /* 增加輸入框寬度，改善手機上輸入體驗 */
   margin-right: 10px;
   border: 2px solid #ddd;
   border-radius: 6px;
@@ -198,40 +204,40 @@ button:active {
 }
 
 .history {
-  margin: 10px 0;
-  padding: 10px;
+  margin: 12px 0;
+  padding: 12px; /* 增加內邊距，提升可讀性 */
   border-bottom: 1px solid #ddd;
   color: #333;
   font-size: 0.9rem;
-  overflow-wrap: break-word; /* 允許文字換行 */
+  overflow-wrap: break-word;
 }
 
-#qr-btn {
-  margin-left: 10px;
-  padding: 12px 20px;
+#send-btn, #qr-btn {
+  padding: 14px 24px;
   background-color: #5d4037;
   color: white;
   border: none;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 1rem;
   transition: background-color 0.3s ease, transform 0.1s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
 }
 
-#qr-btn:hover {
+#send-btn:hover, #qr-btn:hover {
   background-color: #8d6e63;
   transform: translateY(-2px);
 }
 
-#qr-btn:active {
+#send-btn:active, #qr-btn:active {
   transform: translateY(0);
 }
 
 /* 手機專用響應式設計 */
 @media (max-width: 600px) {
   body {
-      padding: 5px; /* 進一步減少內邊距 */
+      padding: 5px;
   }
 
   .container {
@@ -240,7 +246,7 @@ button:active {
   }
 
   h1 {
-      font-size: 1.4rem; /* 更小的標題，適應手機 */
+      font-size: 1.4rem;
   }
 
   #recipeForm label {
@@ -250,23 +256,23 @@ button:active {
 
   #recipeName, #ingredients, #steps, #filterIngredient, #mealType, #filterMealType {
       padding: 12px;
-      margin-bottom: 15px; /* 增加間距，防止溢出 */
+      margin-bottom: 15px;
       font-size: 0.9rem;
       border-radius: 6px;
   }
 
   #ingredients, #steps {
-      height: 90px; /* 更小的初始高度，適應手機 */
+      height: 90px;
   }
 
   #ingredients::placeholder, #steps::placeholder, #filterIngredient::placeholder {
-      font-size: 0.8rem; /* 進一步減小占位符文字，避免溢出 */
+      font-size: 0.8rem;
   }
 
-  button, #qr-btn {
+  button, #send-btn, #qr-btn {
       padding: 12px 18px;
       font-size: 0.9rem;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
   }
 
   #recipeList li {
@@ -276,7 +282,7 @@ button:active {
   }
 
   #recipeList li .actions {
-      flex-direction: column; /* 按鈕垂直排列 */
+      flex-direction: column;
       gap: 8px;
       width: 100%;
   }
@@ -302,8 +308,9 @@ button:active {
   }
 
   #chat-input {
-      width: 60%;
+      width: 100%; /* 保持手機上適當寬度 */
       padding: 10px;
+      margin-bottom: 20px;
       font-size: 0.9rem;
   }
 
@@ -313,8 +320,10 @@ button:active {
       font-size: 0.8rem;
   }
 
-  #qr-btn {
-      width: 38%; /* 確保 QR 碼按鈕適應手機布局 */
+  #send-btn, #qr-btn {
+      width: 100%; /* 手機上按鈕佔滿寬度 */
+      margin-right: 0;
+      margin-bottom: 10px;
   }
 }
 
@@ -338,7 +347,7 @@ button:active {
       height: 110px;
   }
 
-  button, #qr-btn {
+  button, #send-btn, #qr-btn {
       padding: 12px 20px;
       font-size: 1rem;
   }
@@ -350,6 +359,19 @@ button:active {
   #recipeList li button {
       padding: 8px 16px;
       font-size: 0.9rem;
+  }
+
+  #chatbot-container {
+      padding: 15px;
+  }
+
+  #chat-input {
+      width: 100%; /* 平板上略微增加寬度 */
+      margin-bottom: 40px;
+  }
+
+  #send-btn, #qr-btn {
+      margin-bottom: 15px;
   }
 }
 
@@ -373,7 +395,7 @@ button:active {
       height: 150px;
   }
 
-  button, #qr-btn {
+  button, #send-btn, #qr-btn {
       padding: 14px 24px;
       font-size: 1.1rem;
   }
@@ -386,5 +408,18 @@ button:active {
   #recipeList li button {
       padding: 10px 18px;
       font-size: 1rem;
+  }
+
+  #chatbot-container {
+      padding: 20px;
+  }
+
+  #chat-input {
+      width: 100%; /* 桌面恢復原始寬度 */
+      margin-bottom: 30px;
+  }
+
+  #send-btn, #qr-btn {
+      margin-bottom: 20px;
   }
 }
