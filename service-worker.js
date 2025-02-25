@@ -1,12 +1,15 @@
 const CACHE_NAME = "recipe-organizer-pwa-cache-v1";
 const FILES_TO_CACHE = [
   "/Recipe-Organizer-PWA/",
-  "/Recipe-Organizer-PWA/index.html",
-  "/Recipe-Organizer-PWA/style.css",
-  "/Recipe-Organizer-PWA/app.js",
+  "/Recipe-Organizer-PWA/assets/html/index.html",
+  "/Recipe-Organizer-PWA/assets/html/recipes.html",
+  "/Recipe-Organizer-PWA/assets/css/style.css",
+  "/Recipe-Organizer-PWA/assets/js/signIn.js",
+  "/Recipe-Organizer-PWA/assets/js/firebase.js",
+  "/Recipe-Organizer-PWA/assets/js/recipes.js",
   "/Recipe-Organizer-PWA/manifest.json",
-  "/Recipe-Organizer-PWA/icons/icon-128.png",
-  "/Recipe-Organizer-PWA/icons/icon-512.png",
+  "/Recipe-Organizer-PWA/assets/icons/icon-128.png",
+  "/Recipe-Organizer-PWA/assets/icons/icon-512.png",
 ];
 
 self.addEventListener("install", (event) => {
