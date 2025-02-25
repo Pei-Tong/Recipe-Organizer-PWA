@@ -48,7 +48,7 @@ function signIn() {
       console.log("User signed in:", user);
       localStorage.setItem("email", JSON.stringify(user.email));
       log.info(`User ${user.email} signed in successfully`);
-      window.location.href = "assets/html/recipes.html"; // 修正跳轉路徑
+      window.location.href = "recipes.html"; // 修正跳轉路徑
     })
     .catch((error) => {
       console.error("Popup Sign-in Error:", error);

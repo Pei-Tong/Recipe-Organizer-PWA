@@ -4,11 +4,11 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "start": "parcel assets/html/index.html",
-    "build": "parcel build assets/html/index.html --public-url ./",
-    "dev:build": "parcel build --dist-dir dist --no-content-hash assets/html/index.html",
+    "start": "parcel index.html recipes.html",
+    "build": "parcel build index.html recipes.html --dist-dir dist --public-url ./",
+    "dev:build": "parcel build --dist-dir dist --no-content-hash index.html recipes.html",
     "dev:run": "npm run dev:build && npm run dev:start",
-    "dev:start": "parcel serve --dist-dir dist assets/html/index.html",
+    "dev:start": "parcel serve --dist-dir dist index.html recipes.html",
     "lint": "eslint .",
     "test": "jest"
   },
