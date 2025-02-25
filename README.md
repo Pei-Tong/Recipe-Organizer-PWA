@@ -26,34 +26,3 @@ Firebase: Real-time database for storing and retrieving recipe data.
 GitHub Pages: Hosting and deployment.
 Google Analytics: Tracking user interactions (via gtag.js).
 PWA: Manifest and service worker for offline capabilities.
-
-
-## Project Structure
-Recipe-Organizer-PWA/
-├── .github/
-│   └── workflows/
-│       └── deploy.yml    # GitHub Actions workflow for deployment
-├── assets/
-│   ├── css/
-│   │   └── style.css     # Styles for responsive design
-│   ├── html/
-│   │   ├── index.html    # Login page
-│   │   └── recipes.html  # Main app page
-│   ├── icons/
-│   │   ├── favicon.ico   # App favicon
-│   │   ├── icon-128.png  # PWA icon (128x128)
-│   │   └── icon-512.png  # PWA icon (512x512)
-│   └── js/
-│       ├── firebase.js   # Firebase configuration and initialization
-│       ├── recipes.js    # Handles app logic (CRUD, filtering, chatbot)
-│       └── signIn.js     # Handles login functionality (Google & Biometrics - WIP)
-├── service-worker.js     # Service worker for PWA offline capabilities
-├── .eslintrc.js          # ESLint configuration
-├── .gitignore            # Git ignore file
-├── jest.config.js        # Jest configuration for testing
-├── manifest.json         # PWA manifest
-├── package-lock.json     # npm package lock file
-├── package.json          # npm package dependencies
-├── README.md             # Project documentation
-└── tests/
-    └── recipe.test.js    # Example test file
